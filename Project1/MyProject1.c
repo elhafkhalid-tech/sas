@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 float TNotes[100];
+void StarProject();
 int GetSizeTable()
 {   
     int Size;
@@ -24,9 +25,16 @@ void FillTableau()
         scanf("%f",&TNotes[i-1]);  
     }    
 }
+void MenuStatistique()
+{
+    printf("\n\n1-Afficher Moyenne");
+    printf("\n2-Afficher Max");
+    printf("\n3-Afficher Min");
+    printf("\n4-Afficher Admis/Non Admis");
+    printf("\n5-MainMenu");
+}   
 void MainMenu()
 {    
-    system("cls");
     printf("\n1)Saisir N notes");
     printf("\n2)Afficher les notes");
     printf("\n3)Statistiques (moyenne, max, min, admis/non admis)");
@@ -41,42 +49,37 @@ void Performance(int choix)
     {
         case 1:
           FillTableau();
-          MainMenu();
+          StarProject();
           break;
         case 2:
           //AfficherNotes();
+          //StarProject();
           break;
         case 3:
-          //CalculeMoyenne();
+          MenuStatistique();
+          StarStatistique();
           break;
         case 4:
-          //TrouveMax();
-          break;
-        case 5:
-          //TrouveMin();
-          break;
-        case 6:
-           //TrouveAdmis();
-          break;
-        case 7:
-          //TrouveNonAdmis();
-          break;
-        case 8:
           //AjouteNote();
           break;
-        case 9:
+        case 5:
           //ModifierNote();
           break;
-        case 10:
+        case 6:
           //SuprimerNote();
           break;
-        case 11:
-          //Quiter();
+        case 7:
+          printf("End Program");
           break;
     }
 }
+void StarStatistique()
+{
+    
+}
 void StarProject()
 {
+   system("cls");
    MainMenu();
    int choix = LireChoix();
    Performance(choix);
