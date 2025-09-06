@@ -22,10 +22,6 @@ int LireChoix()
     int n;
         printf("Entrer votre Choix? : ");
         scanf("%d", &n);
-        if(n==7)
-        {
-            return n;
-        }
     return n;
 }
 void PauseSystem()
