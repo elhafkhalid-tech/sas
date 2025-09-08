@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 void StarProject();
+
+int NbrEtudiants = 0;
 struct stEtudiant
 {
     char  CNE[20];
@@ -10,24 +13,37 @@ struct stEtudiant
     float moyenne;
 };
 struct stEtudiant Classe[30];
-int NbrEtudiants = 0;
+int LirePosition()
+{
+    int Position;
+    printf("\nEntrer Position d'etudiant : ");
+    scanf("%d",&Position);
+
+    return Position;
+}
+bool CheckPosition(int Position)
+{
+    if(Position >= NbrEtudiants)
+    {
+        printf("\nPosition Invalid!!\n");
+    }
+    return true;
+}
 int LireChoix()
 {
     int choix;
-    printf("\nEntrer votre choix? : ");
-    scanf("%d",&choix);
+    do{
+        printf("\nEntrer choix entre 1 et 6? : ");
+        scanf("%d",&choix);
+    }while(choix <= 0 || choix > 6);
     return choix;
-}
-void  FinProgamme()
-{
-    printf("\nFin Programme\n");
 }
 void SystemPause()
 {
     printf("\n");
     system("pause");
 }
-void Mainmenu()
+void MainMenu()
 {
     system("cls");
     printf("\n1) Ajouter un étudiant");
@@ -35,8 +51,36 @@ void Mainmenu()
     printf("\n3) Afficher tous les étudiants");
     printf("\n4) Afficher bulletin d’un étudiant");
     printf("\n5) Calculer la moyenne générale");
-    printf("\n6) Afficher Bultin");
-    printf("\n7) Quitter\n");
+    printf("\n6) Quitter\n");
+}
+void Initialisation_DesNotes_NbrEtudiants_Moyenne()
+{
+    for(int i=0;i<4;i++)
+      Classe[NbrEtudiants].notes[i] = 0;
+
+   Classe[NbrEtudiants].moyenne = 0;
+   NbrEtudiants++;
+}
+void SaisirNotes()
+{
+    if(NbrEtudiants==0)
+    {
+        printf("\nPas d'etudiants!!!\n");
+        return;
+    }
+    int Position = LirePosition();
+
+    if(Position >= NbrEtudiants)
+    {
+        printf("\nInvalid position\n");
+        return;
+    }
+
+    for(int i=1;i<=4;i++)
+    {
+        printf("Entrer Note(%d) : ",i);
+        scanf("%f",&Classe[Position].notes[i-1]);
+    }
 }
 void AjouterEtudiant()
 {
@@ -51,15 +95,22 @@ void AjouterEtudiant()
    scanf("%s",Classe[NbrEtudiants].prenom);
    printf("Entrer Le CNE? : ");
    scanf("%s",Classe[NbrEtudiants].CNE);
-
-   for(int i=0;i<4;i++)
-      Classe[NbrEtudiants].notes[i] = 0; // initialisation du notes
-
-   Classe[NbrEtudiants].moyenne = 0;
-   NbrEtudiants++;
-
    printf("\nEtudiant AJoute avec succes\n");
 
+   Initialisation_DesNotes_NbrEtudiants_Moyenne();
+
+}
+void AfficherEtudiants()
+{
+    for(int i=1;i<=NbrEtudiants;i++)
+    {
+        printf("\nEtudiant (%d) : ", i);
+        printf("\nPreNom est : %s ",Classe[i-1].prenom);
+        printf("\nNom est : %s ",Classe[i-1].nom);
+        printf("\nCNE est : %s ",Classe[i-1].CNE);
+        printf("\nLes Notes Sont : [%.2f , %.2f , %.2f , %.2f] \n\n", Classe[i-1].notes[0], Classe[i-1].notes[1],
+                                        Classe[i-1].notes[2], Classe[i-1].notes[3]);
+    }
 }
 void GestionMenu(int Choix)
 {
@@ -72,38 +123,33 @@ void GestionMenu(int Choix)
 
         break;
     case 2:
-        //SaisirNotes();
-        StarProject();
+        SaisirNotes();
         SystemPause();
+        StarProject();
         break;
     case 3:
-         //CalculerMoyenneEtudiant();
-        StarProject();
+        AfficherEtudiants();
         SystemPause();
+        StarProject();
         break;
     case 4:
-         //CalculerMoyenneGenerale();
-        StarProject();
+        //AfficherBulletin();
         SystemPause();
+        StarProject();
         break;
     case 5:
-        //AfficherEtudiants();
+        //AfficherMoyenneGenerale();
         StarProject();
         SystemPause();
         break;
     case 6:
-        //AfficherBulletin();
-        StarProject();
-        SystemPause();
-        break;
-    case 7:
-        FinProgamme();
+        printf("\nFin Programme\n");
         break;
     }
 }
 void StarProject()
 {
-    Mainmenu();
+    MainMenu();
     int Choix = LireChoix();
     GestionMenu(Choix);
 }
